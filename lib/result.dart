@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
   final int resultScore;
+  final Function selectHandler;
 
-  Result(this.resultScore);
+  Result(this.resultScore, this.selectHandler);
 
   String get resultPhrase {
     var resultText = '';
@@ -22,11 +23,25 @@ class Result extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // create container to work with the position on the screen...
-    return Center(
-      child: Text(
-        resultPhrase,
-        style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
+    return Container(
+      // width: double.infinity,
+      // height: double.infinity,
+      // color: Colors.pink,
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Text(
+              resultPhrase,
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            FlatButton(
+              child: Text("Reset quiz"),
+              onPressed: this.selectHandler,
+              textColor: Colors.blue,
+            ),
+          ],
+        ),
       ),
     );
     // return Text(this.questionText);

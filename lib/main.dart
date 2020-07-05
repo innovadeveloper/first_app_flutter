@@ -143,6 +143,13 @@ class _MyAppState extends State<MyApp> {
     // parsingJson();
   }
 
+  void _resetQuiz(){
+    setState(() {
+      _totalScore = 0;
+      _questionIndex = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -156,7 +163,7 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 questions: answersAndQuestions,
               )
-            : Result(_totalScore),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
