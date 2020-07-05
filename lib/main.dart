@@ -17,6 +17,29 @@ class MyApp extends StatefulWidget {
   }
 }
 
+class AnswerEntity {
+  String text;
+  int score;
+
+  AnswerEntity.fromJson(Map json){
+    this.text = json["text"];
+    this.score = json ["score"];
+  }
+}
+
+class QuestionAndAnswer {
+  String questionText;
+  List<AnswerEntity> answers;
+
+  QuestionAndAnswer.fromJson(Map json){
+    this.questionText = json["questionText"];
+    this.answers = [];
+    for (var i = 0; i < (json['answers'] as List<Map<String, Object>>).length; i++) {
+      this.answers.add(AnswerEntity.fromJson(json['answers'][i]));
+    }
+  }
+}
+
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
   var _totalScore = 0;
@@ -87,11 +110,37 @@ class _MyAppState extends State<MyApp> {
     }
   ];
 
+  List<QuestionAndAnswer> get answersAndQuestions{
+    List<QuestionAndAnswer> answersAndQuestions = [];
+    for (var i = 0; i < _questions.length; i++) {
+      answersAndQuestions.add(QuestionAndAnswer.fromJson(_questions[i]));
+    }
+    return answersAndQuestions;
+  }
+
+  void parsingJson(){
+    List<QuestionAndAnswer> answersAndQuestions = [];
+    for (var i = 0; i < _questions.length; i++) {
+      answersAndQuestions.add(QuestionAndAnswer.fromJson(_questions[i]));
+    }
+    print("=============================");
+    for (var i = 0; i < answersAndQuestions.length; i++) {
+      print(answersAndQuestions[i].questionText);
+      // print(answersAndQuestions[i].answers);
+      for (var j in answersAndQuestions[i].answers) {
+        print("The text is ${j.text} and score is ${j.score}"); 
+
+      }
+    }
+    // print(answersAndQuestions);
+  }
+
   void _answerQuestion(int score) {
     _totalScore += score;
     setState(() {
       _questionIndex += 1;
     });
+    // parsingJson();
   }
 
   @override
@@ -101,11 +150,11 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My first App in Flutter'),
         ),
-        body: _questionIndex < _questions.length
+        body: _questionIndex < answersAndQuestions.length
             ? Quiz(
                 answerQuestion: _answerQuestion,
                 questionIndex: _questionIndex,
-                questions: _questions,
+                questions: answersAndQuestions,
               )
             : Result(_totalScore),
       ),
