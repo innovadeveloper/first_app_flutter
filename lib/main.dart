@@ -1,5 +1,5 @@
-import 'package:first_app/answer.dart';
-import 'package:first_app/question.dart';
+// import 'package:first_app/answer.dart';
+// import 'package:first_app/question.dart';
 import 'package:first_app/quiz.dart';
 import 'package:first_app/result.dart';
 import 'package:flutter/material.dart';
@@ -19,35 +19,79 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  // var questions = [
-  //   'What\'s your favorite color?',
-  //   'What\'s your favorite animal?',
-  // ];
   var _questions = [
     {
       'questionText': 'What\'s your favorite color?',
-      'answers': ['Black', 'Red', 'Green', 'White']
+      'answers': [
+        {
+          'text': 'Black',
+          'score': 2,
+        },
+        {
+          'text': 'Red',
+          'score': 3,
+        },
+        {
+          'text': 'Green',
+          'score': 4,
+        },
+        {
+          'text': 'White',
+          'score': 5,
+        },
+      ]
     },
     {
       'questionText': 'What\'s your favorite animal?',
-      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+      'answers': [
+        {
+          'text': 'Rabbit',
+          'score': 3,
+        },
+        {
+          'text': 'Snake',
+          'score': 2,
+        },
+        {
+          'text': 'Elephant',
+          'score': 1,
+        },
+        {
+          'text': 'Lion',
+          'score': 4,
+        },
+      ]
     },
     {
       'questionText': 'Who\'s your favorite instructor?',
-      'answers': ['Ines', 'Fortunato', 'Lesly', 'Kane']
+      'answers': [
+        {
+          'text': 'Ines',
+          'score': 5,
+        },
+        {
+          'text': 'Fortunato',
+          'score': 7,
+        },
+        {
+          'text': 'Lesly',
+          'score': 9,
+        },
+        {
+          'text': 'Kane',
+          'score': 4,
+        },
+      ]
     }
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex += 1;
-      // if (_questionIndex >= _questions.length) {
-      //   _questionIndex = 0;
-      // }
     });
-
-    print(_questionIndex);
   }
 
   @override
@@ -63,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 questions: _questions,
               )
-            : Result(),
+            : Result(_totalScore),
       ),
     );
   }
