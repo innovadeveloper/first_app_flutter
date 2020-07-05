@@ -1,3 +1,5 @@
+import 'package:first_app/answer.dart';
+import 'package:first_app/question.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,9 +20,23 @@ class MyAppState extends State<MyApp> {
   
   var questionIndex = 0;
 
+  // var questions = [
+  //   'What\'s your favorite color?',
+  //   'What\'s your favorite animal?',
+  // ];
   var questions = [
-    'What\'s your favorite color?',
-    'What\'s your favorite animal?',
+    {
+      'questionText' : 'What\'s your favorite color?',
+      'answers' : ['Black', 'Red', 'Green', 'White']
+    },
+    {
+      'questionText' : 'What\'s your favorite animal?',
+      'answers' : ['Rabbit', 'Snake', 'Elephant', 'Lion']
+    },
+    {
+      'questionText' : 'Who\'s your favorite instructor?',
+      'answers' : ['Ines', 'Fortunato', 'Lesly', 'Kane']
+    }
   ];
 
   void answerQuestion() {
@@ -43,22 +59,27 @@ class MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Text(questions[questionIndex]),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestion,
-              // onPressed: () => {
-              //   print("answer 1"),
-              // },
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: answerQuestion,
-            ),
+            Question(questions[questionIndex]['questionText']),
+            ...(questions[questionIndex]['answers'] as List<String>).map((answer){
+              return Answer(answerText: answer, selectHandler: this.answerQuestion,);
+            }).toList()
+
+            // // Answer(answerText: ,)
+            // RaisedButton(
+            //   child: Text('Answer 1'),
+            //   onPressed: answerQuestion,
+            //   // onPressed: () => {
+            //   //   print("answer 1"),
+            //   // },
+            // ),
+            // RaisedButton(
+            //   child: Text('Answer 2'),
+            //   onPressed: answerQuestion,
+            // ),
+            // RaisedButton(
+            //   child: Text('Answer 3'),
+            //   onPressed: answerQuestion,
+            // ),
           ],
         ),
       ),
